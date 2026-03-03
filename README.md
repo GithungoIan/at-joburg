@@ -261,6 +261,82 @@ curl http://localhost:3000/ussd/event/registrations
 ```
 
 ---
+### Voice – Core IVR
+
+Standard voice features: outbound calls, IVR menus, OTP, recording, conferencing.
+
+**Endpoints**
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/voice` | Main inbound call callback |
+| POST | `/voice/make-call` | Initiate an outbound call |
+| POST | `/voice/support-menu` | Handle support IVR DTMF input |
+| POST | `/voice/otp-verification` | Deliver an OTP via voice call |
+| POST | `/voice/callback-request` | Log a callback request |
+| POST | `/voice/recording-complete` | Receive completed recording webhook |
+| POST | `/voice/leave-message` | Start a voicemail recording |
+| GET | `/voice/test` | Health check + endpoint list |
+
+**Demo**
+
+```bash
+# Check the voice service is up
+curl http://localhost:3000/voice/test
+
+# Make an outbound call
+curl -X POST http://localhost:3000/voice/make-call \
+  -H "Content-Type: application/json" \
+  -d '{"to":"+27712345678","from":"+27XXXXXXXXX"}'
+
+# Trigger an OTP call
+curl -X POST http://localhost:3000/voice/otp-verification \
+  -H "Content-Type: application/json" \
+  -d '{"phoneNumber":"+27712345678"}'
+
+# Simulate an inbound call hitting your callback
+curl -X POST http://localhost:3000/voice \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sessionId": "session-001",
+    "isActive": "1",
+    "direction": "Inbound",
+    "callerNumber": "+27712345678",
+    "destinationNumber": "+27XXXXXXXXX"
+  }'
+
+# Simulate a support menu selection (Press 1 → Technical Support)
+curl -X POST http://localhost:3000/voice/support-menu \
+  -H "Content-Type: application/json" \
+  -d '{"sessionId":"session-001","dtmfDigits":"1"}'
+```
+
+> **AT Dashboard setting:** Set your virtual number's **Voice Callback URL** to `https://your-tunnel/voice`
+
+---
+
+### Voice – Call Actions Examples
+
+Every AT Voice action type demonstrated in isolated, runnable endpoints.
+
+**Index:** `GET /voice/examples`
+
+| Method | Endpoint | AT Action |
+|---|---|---|
+| POST | `/voice/examples/say` | `say` – Text-to-speech |
+| POST | `/voice/examples/play` | `play` – Stream an audio file |
+| POST | `/voice/examples/get-digits` | `getDigits` – Collect DTMF keypad input |
+| POST | `/voice/examples/dial` | `dial` – Bridge call to another number |
+| POST | `/voice/examples/record` | `record` – Record caller's voice |
+| POST | `/voice/examples/enqueue` | `enqueue` – Place caller in a queue |
+| POST | `/voice/examples/dequeue` | `dequeue` – Pull caller from queue to agent |
+| POST | `/voice/examples/conference` | `conference` – Multi-party conference room |
+| POST | `/voice/examples/redirect` | `redirect` – Hand off to another webhook |
+| POST | `/voice/examples/reject` | `reject` – Reject with busy signal |
+| POST | `/voice/examples/chained` | Multiple actions in sequence |
+| POST | `/voice/examples/conditional-menu` | Business-hours-aware IVR |
+
+---
 
 ## Troubleshooting
 
