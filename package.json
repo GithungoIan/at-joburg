@@ -1,0 +1,40 @@
+{
+  "name": "at-joburg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "africas-talking",
+    "sms",
+    "ussd",
+    "voice",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google/genai": "^1.43.0",
+    "@google/generative-ai": "^0.24.1",
+    "africastalking": "^0.7.8",
+    "africastalking-client": "^1.0.7",
+    "axios": "^1.13.4",
+    "body-parser": "^2.2.2",
+    "bull": "^4.16.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "mongoose": "^8.22.0",
+    "node-cron": "^4.2.1",
+    "nodemon": "^3.1.11",
+    "redis": "^5.10.0",
+    "socket.io": "^4.8.3",
+    "uuid": "^13.0.0",
+    "winston": "^3.19.0"
+  }
+}
