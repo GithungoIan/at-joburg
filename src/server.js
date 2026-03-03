@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const logger           = require('./utils/logger');
 const ussdRoutes       = require('./ussd/routes');
 const eventUssdRoutes  = require('./ussd/examples/eventRegistration');
-// const voiceRoutes      = require('./voice/routes');
-// const voiceExamplesRoutes = require('./voice/examples/callActions');
+const voiceRoutes         = require('./voice/routes');
+const voiceExamplesRoutes = require('./voice/callActions');
 // const geminiVoiceRoutes   = require('./voice/geminiVoice');
 // const liveVoiceRoutes     = require('./voice/liveVoice');
 // const webrtcRoutes        = require('./webrtc/routes');
@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 
 app.use('/ussd',           ussdRoutes);
 app.use('/ussd/event',     eventUssdRoutes);
-// app.use('/voice',          voiceRoutes);
-// app.use('/voice/examples', voiceExamplesRoutes);
+app.use('/voice',          voiceRoutes);
+app.use('/voice/examples', voiceExamplesRoutes);
 // app.use('/voice/ai',       geminiVoiceRoutes);
 // app.use('/voice/live',     liveVoiceRoutes);
 // app.use('/webrtc',         webrtcRoutes);
